@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 app = FastAPI()
 
 
-class ExperimentCreate(BaseModel):
+class ExperimentBase(BaseModel):
     name: str = Field(min_length=1)
     language: str = Field(min_length=1)
     algorithm: str = Field(min_length=1)
@@ -12,20 +12,19 @@ class ExperimentCreate(BaseModel):
     execution_time_ms: float = Field(ge=0)
 
 
-class ExperimentResponse(BaseModel):
+class ExperimentCreate(ExperimentBase):
+    pass
+
+
+class ExperimentResponse(ExperimentBase):
     id: int
-    name: str = Field(min_length=1)
-    language: str = Field(min_length=1)
-    algorithm: str = Field(min_length=1)
-    input_size: int = Field(gt=0)
-    execution_time_ms: float = Field(ge=0)
 
 
 EXPERIMENTS = []
 
 
-@app.get("/api/v1/")
-async def get_experiment():
+@app.get("/api/v1/experiments", response_model=list[ExperimentResponse])
+async def list_experiments():
     return EXPERIMENTS
 
 

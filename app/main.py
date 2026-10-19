@@ -1,10 +1,11 @@
 from fastapi import FastAPI, status
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 app = FastAPI()
 
 
 class ExperimentBase(BaseModel):
+    model_config = ConfigDict(str_strip_whitespace=True, allow_inf_nan=False)
     name: str = Field(min_length=1)
     language: str = Field(min_length=1)
     algorithm: str = Field(min_length=1)

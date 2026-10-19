@@ -221,3 +221,7 @@ __marimo__/
 
 # VSCODE
 .vscode
+.venv/
+*.py[cod]
+xcuserdata/
+*.xcuserstate

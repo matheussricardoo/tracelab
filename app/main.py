@@ -1,4 +1,4 @@
-from fastapi import FastAPI, status
+from fastapi import FastAPI, status, HTTPException, Path
 from pydantic import BaseModel, Field, ConfigDict
 
 app = FastAPI()
@@ -29,6 +29,19 @@ async def list_experiments():
     return EXPERIMENTS
 
 
+@app.get(
+    "/api/v1/experiments/{experiment_id}",
+    response_model=ExperimentResponse,
+    status_code=status.HTTP_200_OK,
+)
+async def get_experiments_by_id(experiment_id: int = Path(gt=0)):
+    for experiment in EXPERIMENTS:
+        if experiment.id == experiment_id:
+            return experiment
+
+    raise HTTPException(status_code=404, detail="ID not found")
+
+
 @app.post(
     "/api/v1/experiments",
     status_code=status.HTTP_201_CREATED,
@@ -40,3 +53,4 @@ async def create_experiment(experiment: ExperimentCreate):
     new_experiment = ExperimentResponse(id=id, **data)
     EXPERIMENTS.append(new_experiment)
     return new_experiment
+

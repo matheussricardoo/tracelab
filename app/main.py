@@ -1,5 +1,5 @@
-from fastapi import FastAPI, status, HTTPException, Path
-from pydantic import BaseModel, Field, ConfigDict
+from fastapi import FastAPI, HTTPException, Path, status
+from pydantic import BaseModel, ConfigDict, Field
 
 app = FastAPI()
 

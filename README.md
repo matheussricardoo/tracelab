@@ -32,8 +32,21 @@ curl -i http://localhost:8000/api/v1/experiments
 
 ```bash
 python -m pip install -r requirements-dev.txt
-python -m unittest discover -s tests -v
+python -m ruff check .
+python -m ruff format --check .
+python -m pytest tests/ -v
 ```
+
+To apply automatic lint fixes and format Python files locally:
+
+```bash
+python -m ruff check --fix .
+python -m ruff format .
+```
+
+Ruff targets Python 3.12 with an 88-character formatting width, checks common
+Python errors and unused imports, and sorts imports. GitHub Actions runs lint,
+format checks and Pytest on pushes and pull requests to `main`, and on manual runs.
 
 ## Limitations and next steps
 

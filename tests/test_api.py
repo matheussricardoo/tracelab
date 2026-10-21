@@ -1,9 +1,7 @@
-
 import pytest
 from fastapi.testclient import TestClient
 
 from app.main import app, EXPERIMENTS
-
 
 # Fixtures
 
@@ -219,9 +217,7 @@ def test_reject_infinite_execution_time(client, valid_payload):
 def test_get_experiment_by_id(client, created_experiment):
     experiment_id = created_experiment["id"]
 
-    response = client.get(
-        f"/api/v1/experiments/{experiment_id}"
-    )
+    response = client.get(f"/api/v1/experiments/{experiment_id}")
 
     assert response.status_code == 200
     assert response.json() == created_experiment
@@ -247,9 +243,7 @@ def test_get_second_experiment(client, valid_payload):
 
     experiment_id = second.json()["id"]
 
-    response = client.get(
-        f"/api/v1/experiments/{experiment_id}"
-    )
+    response = client.get(f"/api/v1/experiments/{experiment_id}")
 
     assert response.status_code == 200
     assert response.json() == second.json()
@@ -273,9 +267,7 @@ def test_get_experiment_not_found(client):
     ],
 )
 def test_get_experiment_invalid_id(client, invalid_id):
-    response = client.get(
-        f"/api/v1/experiments/{invalid_id}"
-    )
+    response = client.get(f"/api/v1/experiments/{invalid_id}")
 
     assert response.status_code == 422
 
@@ -286,9 +278,7 @@ def test_get_does_not_modify_storage(
 ):
     initial_count = len(EXPERIMENTS)
 
-    response = client.get(
-        f"/api/v1/experiments/{created_experiment['id']}"
-    )
+    response = client.get(f"/api/v1/experiments/{created_experiment['id']}")
 
     assert response.status_code == 200
     assert len(EXPERIMENTS) == initial_count

@@ -53,4 +53,3 @@ async def create_experiment(experiment: ExperimentCreate):
     new_experiment = ExperimentResponse(id=id, **data)
     EXPERIMENTS.append(new_experiment)
     return new_experiment
-
